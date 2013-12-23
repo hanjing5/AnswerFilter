@@ -59,7 +59,7 @@ exports.createanswer = function createanswer(uid, answer, callback){
 exports.showanswer = function showanswer(start, limit, callback) {
   var Answer = mongoose.model('Answer');
 
-  Answer.find({}, {}, { skip: start, limit: limit }, function(err, results) {
+  Answer.find({}, {}, { skip: start, limit: limit, sort: {uid:1}}, function(err, results) {
     console.log(results);
     callback("", results);
   });
