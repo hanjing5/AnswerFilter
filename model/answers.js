@@ -1,11 +1,10 @@
 var mongoose = require('mongoose');
 
-exports.answerlist = function answerlist(uid, callback){
+exports.answerlist = function answerlist(callback){
 
   var Answer = mongoose.model('Answer');
 
-  console.log(uid);
-  Answer.find({uid:uid}, function(err, answers) {
+  Answer.find({}, function(err, answers) {
     if(err){
       console.log(err);
     } else {

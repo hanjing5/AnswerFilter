@@ -4,14 +4,9 @@ var answerdata = require('../model/answers');
  */
 
 exports.index = function(req, res){
-  var myId =2;
-  answerdata.answerlist(myId, function(err, answerlist){
-  	console.log('index.js: ' +myId);
-
-
+  answerdata.answerlist(function(err, answerlist){
     res.render('index', { 
       title: 'Express' ,
-      myId: myId,
       answers: answerlist
     });
   });

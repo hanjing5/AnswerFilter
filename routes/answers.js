@@ -4,8 +4,8 @@ var answerdata = require('../model/answers');
  */
 
 exports.create = function(req, res){
-  var myId =2;
-  var answer = 'foo';
+  var myId =req.params.id;
+  var answer = req.params.answer;
   answerdata.createanswer(myId, answer, function(err, answerlist){
   	console.log('index.js: ' + myId);
     res.redirect('/');
