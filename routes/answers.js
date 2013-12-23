@@ -28,3 +28,16 @@ exports.show = function(req, res) {
     });
   });
 };
+
+exports.delete = function(req, res) {
+  var uid = req.params.id;
+  answerdata.deleteanswer(uid, function(err, result){
+    res.redirect("/");
+  });
+};
+
+exports.deleteAll = function(req, res){
+  answerdata.deleteallanswers(function(err, result){
+    res.redirect("/");
+  });
+}

@@ -35,6 +35,8 @@ app.get('/create', answers.create);
 app.get('/users', user.list);
 app.get('/answers/create/:id/:answer', answers.create);
 app.get('/answers/show/:id', answers.show);
+app.get('/answers/delete/:id', answers.delete);
+app.get('/answers/deleteAll', answers.deleteAll);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
