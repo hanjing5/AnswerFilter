@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  h1= title
-  p #{answer.answer}
+  p= title
+  h1 #{answer.answer}
   a(href='/answers/show/' + next_uid)
-    =next_uid
+    ='Next: ' + next_uid

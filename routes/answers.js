@@ -23,7 +23,7 @@ exports.show = function(req, res) {
   var limit = 1;
   answerdata.showanswer(start, limit, function(err, answer){
     res.render('show', {
-      title:' show answer',
+      title:'Answer',
       answer: answer[0],
       next_uid: Number(start)+1
     });
