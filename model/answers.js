@@ -1,6 +1,12 @@
 var mongoose = require('mongoose');
 var fs = require('fs');
 
+var filesource = 'https://raw.github.com/unparallellogical/AnswerFilter/master/data/data.csv';
+//var filesource = '/Users/hjing/Documents/Code/side/GMAT/vocab/AnswerFilter/data/data.csv';
+
+var http = require('http');
+var client = http.createClient(443, filesource);
+
 /*
 * not used
 exports.answerlist = function answerlist(callback){
@@ -16,8 +22,34 @@ exports.answerlist = function answerlist(callback){
 }
 */
 
+
 exports.answerlist = function answerlist(callback){
-  fs.readFile('/Users/hjing/Documents/Code/side/GMAT/vocab/AnswerFilter/data/data.csv', 'utf8', function (err,data) {
+  var request = require('request');
+  request(filesource, function (error, response, data) {
+    if (!error && response.statusCode == 200) {
+      console.log('sourceifle body:' + data) // Print the google web page.
+      var Answers = [];
+      var counter = 1;
+      for (i=0;i<data.length;i++){
+        if (data[i] == '\n')
+          continue;
+        var answer = {
+            uid: counter,
+            answer: data[i]
+          };
+        console.log(answer);
+        Answers.push(answer);
+        counter++;
+      }
+      callback("", Answers);
+    }
+  })
+}
+
+/*
+exports.answerlist = function answerlist(callback){
+
+  fs.readFile(filesource, 'utf8', function (err,data) {
     if (err) {
       return console.log(err);
     }
@@ -39,6 +71,7 @@ exports.answerlist = function answerlist(callback){
     callback("", Answers);
   });
 }
+*/
 
 exports.answershow = function answerlist(uid, callback){
   var Answer = mongoose.model('Answer');
@@ -102,7 +135,7 @@ exports.showanswer = function showanswer(start, limit, callback) {
 */
 
 exports.showanswer = function showanswer(start, limit, callback){
-  fs.readFile('/Users/hjing/Documents/Code/side/GMAT/vocab/AnswerFilter/data/data.csv', 'utf8', function (err,data) {
+  fs.readFile(filesource, 'utf8', function (err,data) {
       console.log('reading record from flatfile');
       if (err) {
         return console.log(err);

@@ -2,13 +2,17 @@
   "name": "application-name",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": "0.10.x"
+  },
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.4.7",
+    "express": "~3.4.7",
     "jade": "*",
     "mongoose": "*",
-    "forever":"*"
+    "forever": "*",
+    "logfmt": "~0.18.1"
   }
 }
