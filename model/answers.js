@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
+var fs = require('fs');
 
-
+/*
+* not used
 exports.answerlist = function answerlist(callback){
   var Answer = mongoose.model('Answer');
   Answer.find({}, {},{sort: {uid:1}},function(err, answers) {
@@ -11,6 +13,31 @@ exports.answerlist = function answerlist(callback){
       callback("", answers);
     }
   })
+}
+*/
+
+exports.answerlist = function answerlist(callback){
+  fs.readFile('/Users/hjing/Documents/Code/side/GMAT/vocab/AnswerFilter/data/data.csv', 'utf8', function (err,data) {
+    if (err) {
+      return console.log(err);
+    }
+    console.log(data);
+    var Answers = [];
+
+    var counter = 1;
+    for (i=0;i<data.length;i++){
+      if (data[i] == '\n')
+        continue;
+      var answer = {
+        uid: counter,
+        answer: data[i]
+      };
+      console.log(answer);
+      Answers.push(answer);
+      counter++;
+    }
+    callback("", Answers);
+  });
 }
 
 exports.answershow = function answerlist(uid, callback){
