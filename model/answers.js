@@ -39,7 +39,6 @@ exports.answershow = function answerlist(uid, callback){
   })
 }
 
-
 exports.createanswer = function createanswer(uid, answer, callback){
   var Answer = mongoose.model('Answer');
 
@@ -55,5 +54,14 @@ exports.createanswer = function createanswer(uid, answer, callback){
       console.log(uid + " " + answer);
       callback("", answer);
     }
+  });
+}
+
+exports.showanswer = function showanswer(start, limit, callback) {
+  var Answer = mongoose.model('Answer');
+
+  Answer.find({}, {}, { skip: start, limit: limit }, function(err, results) {
+    console.log(results);
+    callback("", results);
   });
 }

@@ -17,3 +17,14 @@ exports.new = function(req, res) {
     title: 'new answer'
   });
 };
+
+exports.show = function(req, res) {
+  var start = req.params.id;
+  var limit = 1;
+  answerdata.showanswer(start, limit, function(err, answer){
+    res.render('show', {
+      title:' show answer',
+      answer: answer[0]
+    });
+  });
+};

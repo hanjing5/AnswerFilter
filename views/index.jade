@@ -4,4 +4,7 @@ block content
   h1= title
   p Welcome to #{title}
   p Welcome to #{myId}
+  - for (var i = 0; i < answers.length;++i){
+    p #{answers[i].uid} - #{answers[i].answer}
+  - }
   p #{answers}
