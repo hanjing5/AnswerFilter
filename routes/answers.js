@@ -24,7 +24,8 @@ exports.show = function(req, res) {
   answerdata.showanswer(start, limit, function(err, answer){
     res.render('show', {
       title:' show answer',
-      answer: answer[0]
+      answer: answer[0],
+      next_uid: Number(start)+1
     });
   });
 };

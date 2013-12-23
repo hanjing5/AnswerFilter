@@ -90,7 +90,7 @@ exports.deleteanswer = function deleteanswer(uid, callback){
     callback("", result);
   });
 }
-
+/*
 exports.showanswer = function showanswer(start, limit, callback) {
   var Answer = mongoose.model('Answer');
 
@@ -98,6 +98,34 @@ exports.showanswer = function showanswer(start, limit, callback) {
     console.log(results);
     callback("", results);
   });
+}
+*/
+
+exports.showanswer = function showanswer(start, limit, callback){
+  fs.readFile('/Users/hjing/Documents/Code/side/GMAT/vocab/AnswerFilter/data/data.csv', 'utf8', function (err,data) {
+      console.log('reading record from flatfile');
+      if (err) {
+        return console.log(err);
+      }
+      console.log(data);
+      var answer = {};
+      var counter = 1;
+      for (i=0;i<data.length;i++){
+        console.log(i);
+        if (data[i] == '\n')
+          continue;
+        answer = {
+          uid: counter,
+          answer: data[i]
+        };
+        console.log(answer);
+        if (counter == start)
+          break;
+        counter++;
+      }
+      console.log("befor callback" + answer);
+      callback("", [answer]);
+    });
 }
 
 exports.deleteallanswers = function deleteallanswers(callback){
