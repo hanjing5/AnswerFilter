@@ -2,6 +2,9 @@ extends layout
 
 block content
   p= title
-  h1 #{answer.answer}
+  h1
+    strong
+      =answer.answer
+  br
   a(href='/answers/show/' + next_uid)
     ='Next: ' + next_uid

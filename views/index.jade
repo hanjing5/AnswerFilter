@@ -2,13 +2,13 @@ extends layout
 
 block content
   h1= title
-  a(href='/answers/deleteAll')
-    ='Delete All'
+  //a(href='/answers/deleteAll')
+  //  ='Delete All'
   p Welcome to #{title}
-  p My Id #{myId}
+  p Edit the file 'data.csv' in /data to create new answer key sets
+  p Answers
   - for (var i = 0; i < answers.length;++i){
     p #{answers[i].uid} - #{answers[i].answer}
   - }
-  p #{answers}
   a(href='/answers/show/1')
     ='Start'

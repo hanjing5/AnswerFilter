@@ -6,7 +6,7 @@ var answerdata = require('../model/answers');
 exports.index = function(req, res){
   answerdata.answerlist(function(err, answerlist){
     res.render('index', { 
-      title: 'Express' ,
+      title: 'Answer Keys' ,
       answers: answerlist
     });
   });
