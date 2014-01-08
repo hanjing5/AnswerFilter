@@ -6,4 +6,11 @@ var answerSchema = new mongoose.Schema({
 });
 mongoose.model('Answer', answerSchema);
 
-mongoose.connect('mongodb://localhost/test');
+var uristring =
+process.env.MONGOHQ_URL ||
+process.env.MONGOLAB_URI ||
+process.env.MONGOHQ_URL ||
+'mongodb://localhost/test';
+
+
+mongoose.connect(uristring);
