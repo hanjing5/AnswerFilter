@@ -32,6 +32,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/create', answers.create);
+app.get('/answers', answers.list)
 app.post('/answers/create', answers.createAndRefresh);
 app.get('/users', user.list);
 app.get('/answers/create/:id/:answer', answers.create);
