@@ -3,6 +3,13 @@ var answerdata = require('../model/answers');
  * GET home page.
  */
 
+function angularJSONPify(req, o){
+    var message = JSON.stringify(o);
+    var jsonpCallback = req.query.callback; //Assuming you are using express
+    message = jsonpCallback + "(" + message + ");"
+    return message;
+}
+
 exports.create = function(req, res){
   var myId =req.params.id;
   var answer = req.params.answer;
@@ -13,7 +20,7 @@ exports.create = function(req, res){
 };
 
 exports.list = function(req, res){
-  console.log(req);
+  //console.log(req);
   answerdata.answerlist(function(err, answerlist){
     //res.writeHead(200, { 'Content-Type': 'application/json'});
     //res.end(JSON.stringify(answerlist));
@@ -42,15 +49,29 @@ exports.new = function(req, res) {
 };
 
 exports.show = function(req, res) {
+
+  //console.log(req);
   var start = req.params.id;
-  var limit = 1;
-  answerdata.showanswer(start, limit, function(err, answer){
-    res.render('show', {
-      title:'Answer',
-      answer: answer[0],
-      next_uid: Number(start)+1
+  var ending = start.split('.')[1];
+  var uid = start.split('.')[0];
+  console.log(start);
+  console.log(ending);
+  if (ending=='json') {
+    answerdata.answerShowById(uid, function(err, answer){
+      console.log(answer);
+      var message = angularJSONPify(req, answer);
+      res.end(message);
     });
-  });
+  } else {
+    var limit = 1;
+    answerdata.showanswer(start, limit, function(err, answer){
+      res.render('show', {
+        title:'Answer',
+        answer: answer[0],
+        next_uid: Number(start)+1
+      });
+    });
+  }
 };
 
 exports.delete = function(req, res) {

@@ -25,6 +25,19 @@ exports.answershow = function answerlist(uid, callback){
   })
 }
 
+exports.answerShowById = function answerShowById(uid, callback){
+  var Answer = mongoose.model('Answer');
+  console.log(uid);
+  Answer.findOne({uid:Number(uid)}, function(err, answers) {
+    if(err){
+      console.log(err);
+    } else {
+      console.log(answers);
+      callback("", answers);
+    }
+  })
+}
+
 
 exports.createAndRefresh = function createAndRefresh(payload, callback){
   var Answer = mongoose.model('Answer');
