@@ -13,18 +13,25 @@ exports.create = function(req, res){
 };
 
 exports.list = function(req, res){
+  console.log(req);
   answerdata.answerlist(function(err, answerlist){
-    res.writeHead(200, { 'Content-Type': 'application/json'});
-    res.end(JSON.stringify(answerlist));
+    //res.writeHead(200, { 'Content-Type': 'application/json'});
+    //res.end(JSON.stringify(answerlist));
+    var message = JSON.stringify(answerlist);
+    var jsonpCallback = req.query.callback; //Assuming you are using express
+    message = jsonpCallback + "(" + message + ");"
+    res.end(message);
+
   });
 }
 
 exports.createAndRefresh = function(req, res){
   var payload = req.body;
   answerdata.createAndRefresh(payload, function(err, answerlist){
+    res.json({});
     //res.redirect('/');
-    res.writeHead(200, { 'Content-Type': 'application/json'});
-    res.end();
+    //res.writeHead(200, { 'Content-Type': 'application/json'});
+    //res.end();
   });
 };
 
