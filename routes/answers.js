@@ -23,6 +23,8 @@ exports.createAndRefresh = function(req, res){
   var payload = req.body;
   answerdata.createAndRefresh(payload, function(err, answerlist){
     //res.redirect('/');
+    res.writeHead(200, { 'Content-Type': 'application/json'});
+    res.end();
   });
 };
 
