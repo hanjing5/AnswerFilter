@@ -14,16 +14,6 @@ exports.answerlist = function answerlist(callback){
 
 exports.answershow = function answerlist(uid, callback){
   var Answer = mongoose.model('Answer');
-  /*
-  var answer = new Answer({ 
-      uid: '2',
-      answer: 'fudge'
-    });
-  answer.save(function (err) {
-    if (err) // ...
-    console.log('meow');
-  });
-  */
   console.log(uid);
   Answer.findOne({uid:uid}, function(err, answers) {
     if(err){
@@ -35,22 +25,64 @@ exports.answershow = function answerlist(uid, callback){
   })
 }
 
-exports.createanswer = function createanswer(uid, answer, callback){
+
+exports.createAndRefresh = function createAndRefresh(payload, callback){
   var Answer = mongoose.model('Answer');
 
-  var a = new Answer({
-    uid:uid,
-    answer:answer
-  });
+  //console.log(payload);
 
-  a.save(function(err){
-    if(err) {
-      console.log('error not saved');
-    } else {
-      console.log(uid + " " + answer);
-      callback("", answer);
-    }
-  });
+  var keys = Object.keys(payload);
+  var l = keys.length;
+  for(var i = 0; i < l; i++){
+    var uid = keys[i];
+    var answer = payload[uid];
+   
+    //console.log(uid + ':' + answer);
+    var a = new Answer({
+      uid:uid,
+      answer:answer
+    });
+    //console.log(a);
+
+    Answer.update({uid: Number(uid)}, {$set: { answer: answer}}, {upsert: true}, function (err) {
+      if(err) {
+        console.log('error not saved');
+      } else {
+        console.log(uid + " " + answer);
+        callback("", answer);
+      }
+    });
+  }
+}
+
+exports.createanswer = function createanswer(uid, answer, callback){
+
+
+    var Answer = mongoose.model('Answer');
+
+    var a = new Answer({
+      uid:uid,
+      answer:answer
+    });
+
+    Answer.update({uid: Number(uid)}, {$set: { answer: answer}}, {upsert: true}, function (err) {
+      if(err) {
+        console.log('error not saved');
+      } else {
+        console.log(uid + " " + answer);
+        callback("", answer);
+      }
+    });
+    /*
+    a.save(function(err){
+      if(err) {
+        console.log('error not saved');
+      } else {
+        console.log(uid + " " + answer);
+        callback("", answer);
+      }
+    });
+  */
 }
 
 exports.deleteanswer = function deleteanswer(uid, callback){

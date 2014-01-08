@@ -12,6 +12,13 @@ exports.create = function(req, res){
   });
 };
 
+exports.createAndRefresh = function(req, res){
+  var payload = req.body;
+  answerdata.createAndRefresh(payload, function(err, answerlist){
+    //res.redirect('/');
+  });
+};
+
 exports.new = function(req, res) {
   res.render('new', {
     title: 'new answer'
